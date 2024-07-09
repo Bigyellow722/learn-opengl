@@ -7,6 +7,8 @@ set(CMAKE_C_STANDARD_REQUIRED True)
 include_directories(include)
 link_directories(/usr/local/lib)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
+
 add_executable(OpenGL_GLFW_GLAD src/main.c src/glad.c)
 
 find_package(OpenGL REQUIRED)
