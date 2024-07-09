@@ -1,0 +1,16 @@
+* learn opengl
+
+** goals
+
+TBD
+
+** build
+
+#+begin_src zsh
+
+  cd learn-opengl
+  mkdir build
+  cmake -S . -B build
+  cmake --build build
+
+#+end_src
