@@ -14,3 +14,12 @@ TBD
   cmake --build build
 
 #+end_src
+
+** test
+
+#+begin_src zsh
+
+  cd build
+  ctest
+
+#+end_src
