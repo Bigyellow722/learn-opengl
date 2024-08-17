@@ -5,7 +5,7 @@
 #define VERTEX_SHADER_PATH "../res/shader/vertexShader.glsl"
 #define FRAGMENT_SHADER_PATH "../res/shader/fragmentShader.glsl"
 
-char *loadShader(const char *filePath)
+static char *loadShader(const char *filePath)
 {
     
     FILE *file = fopen(filePath, "r");
@@ -43,7 +43,7 @@ err_open_file:
     return NULL;
 }
 
-unsigned int compileShader(const char *shaderSource, enum shaderType type)
+static unsigned int compileShader(const char *shaderSource, enum shaderType type)
 {
     unsigned int shader = 0;
 
@@ -74,7 +74,7 @@ unsigned int compileShader(const char *shaderSource, enum shaderType type)
     return shader;
 }
 
-unsigned int loadAndCompileShader(const char *filePath, enum shaderType type)
+static unsigned int loadAndCompileShader(const char *filePath, enum shaderType type)
 {
     unsigned int shader = 0;
 
@@ -92,3 +92,6 @@ unsigned int loadAndCompileShader(const char *filePath, enum shaderType type)
     return shader;
 }
 
+struct shaderOps gl_shaderOps = {
+    .loadAndCompileShader = loadAndCompileShader,
+};

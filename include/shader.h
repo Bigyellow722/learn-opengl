@@ -9,26 +9,24 @@
 enum shaderType {
     VERTEX_SHADER,
     FRAGMENT_SHADER,
+    MAX_TYPE_SHADER,
 };
 
 /* TODO: Hide all details about opengl */
 struct shaderInfo {
     unsigned int shader;
-    enum shaderType type;
-};
-
-
-struct shaderOps {
-    unsigned int (* loadAndCompileShader)(const char *filePath, enum shaderType type);
     
 };
 
 
+struct shaderProgramOps {
+    unsigned int (* loadAndCompile)(void);
+    unsigned int (* loadAndCompileShader)(const char *filePath);
+};
+
+
 struct shaderManagement {
-    size_t availableIndex;
-    size_t capacity;
-    struct shaderOps *ops;
-    struct shaderInfo shader[];
+    struct shaderInfo shader[MAX_TYPE_SHADER];
 };
 
 struct shaderProgram {
@@ -37,11 +35,12 @@ struct shaderProgram {
     struct shaderProgramOps *ops;
 };
 
-/* for struct shaderManagement */
-int registerShaderOps(struct shaderOps *ops);
-int registerShaderByFilePath(enum shaderType type, const char *filePath);
-int initShaderManagement();
 
+int registerShaderByFilePath(enum shaderType type, const char *filePath);
+/* different shaders are store at ShaderManagement */
+int initShaderManagement();
+/* init a shader program in a render flow */
+int initShaderProgram(struct shaderProgram* prog);
 
 
 #endif
