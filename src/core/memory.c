@@ -11,7 +11,7 @@ void *xmalloc(size_t size)
 
     res = malloc(size);
     if (!res) {
-	die("xmalloc: no enough memory\n");
+	err("xmalloc: no enough memory\n");
     }
     return res;
 }
@@ -21,11 +21,11 @@ void *xrealloc(void* ptr, size_t size)
     void *res = NULL;
 
     if(!ptr) {
-	die("xrealloc: ptr is null\n");
+	err("xrealloc: ptr is null\n");
     }
     res = realloc(ptr, size);
     if (!res) {
-	die("xrealloc: no enough memory\n");
+	err("xrealloc: no enough memory\n");
     }
     return res;
 }

@@ -16,7 +16,7 @@ add_subdirectory(src)
 add_subdirectory(vendor)
 
 
-add_library(template $<TARGET_OBJECTS:core>)
+add_library(template $<TARGET_OBJECTS:core> $<TARGET_OBJECTS:platform>)
 target_include_directories(template PUBLIC
 				    ${CMAKE_CURRENT_SOURCE_DIR}/include
 				    ${CMAKE_CURRENT_SOURCE_DIR}/src/core
