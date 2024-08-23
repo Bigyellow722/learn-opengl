@@ -3,9 +3,15 @@
 #include "log.h"
 #include <stdlib.h>
 
+struct windowClass* g_window_ops = NULL;
+
+void setWindowClass(struct windowClass *ops)
+{
+    g_window_ops = ops;
+}
 
 
-struct window* createWindow(struct windowNativeOps *ops)
+struct window* __createWindow(struct windowClass *ops)
 {
     struct window *win = NULL;
 
@@ -20,7 +26,7 @@ struct window* createWindow(struct windowNativeOps *ops)
     
     win->ops = ops;
     if (win->ops->createNativeWindow) {
-	win->m_window = win->ops->createNativeWindow(win, ops);
+	win->m_window = win->ops->createNativeWindow(ops);
 	if (!win->m_window) {
 	    err("%s: failed tp create native window", __func__);
 	    goto err_create_native_window;
@@ -35,6 +41,12 @@ err_create_native_window:
 err_alloc_win:
 err_no_ops:
     return NULL;
+}
+
+
+struct window* createWindow(void)
+{
+    return __createWindow(g_window_ops);
 }
 
 void closeWindow(struct window* win)

@@ -3,18 +3,18 @@
 
 struct window;
 
-struct windowNativeOps {
-    void* (* createNativeWindow)(struct windowNativeOps *ops);
+struct windowClass {
+    void* (* createNativeWindow)(struct windowClass *ops);
     void (* closeNativeWindow)(struct window *win);
 };
 
 struct window {
-    struct windowNativeOps *ops;
+    struct windowClass *ops;
     void *m_window;
 };
 
-
-struct window* createWindow(struct windowNativeOps *ops);
+void setWindowClass(struct windowClass *ops);
+struct window* createWindow(void);
 void closeWindow(struct window* win);
 
 #endif

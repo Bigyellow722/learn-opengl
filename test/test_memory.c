@@ -1,5 +1,5 @@
-#include "memory.h"
-#include "log.h"
+#include "core/memory.h"
+#include "core/log.h"
 
 #include <string.h>
 
