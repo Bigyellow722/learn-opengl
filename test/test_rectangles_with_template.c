@@ -32,20 +32,7 @@ void processInput(GLFWwindow *window) {
 }
 
 int main() {
-# if 0
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-    GLFWwindow* window = glfwCreateWindow(800, 400, "LearnOpenGL", NULL, NULL);
-    if (window == NULL) {
-        printf("Failed to create GLFW window\n");
-        glfwTerminate();
-        return -1;
-    }
-#endif
-    struct window *win = createWindow();
+    struct window *win = createWindow("Learn OpenGL", 800, 600);
     if (!win) {
 	err("Failed to create Window\n");
 	return -1;

@@ -6,9 +6,9 @@
 #include "log.h"
 #include "window.h"
 
-typedef void* (* createNativeWindow_t)(struct windowClass *ops);
+typedef void* (* createNativeWindow_t)(struct windowClass *ops, struct windowCap config);
 
-GLFWwindow *glfwCreateNativeWindow(struct windowClass *ops)
+GLFWwindow *glfwCreateNativeWindow(struct windowClass *ops, struct windowCap config)
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -16,7 +16,7 @@ GLFWwindow *glfwCreateNativeWindow(struct windowClass *ops)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 
-    GLFWwindow* window = glfwCreateWindow(800, 400, "LearnOpenGL", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(config.width, config.height, config.name, NULL, NULL);
     if (window == NULL) {
         err("Failed to create GLFW window\n");
         glfwTerminate();
