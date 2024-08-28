@@ -6,16 +6,18 @@
 #include "log.h"
 #include "window.h"
 
-typedef void* (* createNativeWindow_t)(struct windowClass *ops, struct windowCap config);
+int g_isGlfwInit = 0;
 
-GLFWwindow *glfwCreateNativeWindow(struct windowClass *ops, struct windowCap config)
+void *glfwCreateNativeWindow(struct windowClass *ops, struct windowCap config)
 {
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
-
+    if (!g_isGlfwInit) {
+	glfwInit();
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
+	g_isGlfwInit = 1;
+    }
     GLFWwindow* window = glfwCreateWindow(config.width, config.height, config.name, NULL, NULL);
     if (window == NULL) {
         err("Failed to create GLFW window\n");
@@ -33,14 +35,22 @@ void glfwCloseNativeWindow(struct window *win)
     glfwTerminate();
 }
 
+void glfwUpdateNativeWindow(struct window *win)
+{
+    if (!win)
+	return;
+
+    glfwSwapBuffers(win->m_window);
+    glfwPollEvents();
+}
+
 static struct windowClass glfwWindowOps = {
-    .createNativeWindow = (createNativeWindow_t)glfwCreateNativeWindow,
-    .closeNativeWindow = glfwCloseNativeWindow
+    .createNativeWindow = glfwCreateNativeWindow,
+    .closeNativeWindow = glfwCloseNativeWindow,
+    .updateNativeWindow = glfwUpdateNativeWindow
 };
 
 __attribute__((constructor)) void doInitWindowClass(void)
 {
-    info("%s, begin\n", __func__);
     setWindowClass(&glfwWindowOps);
-    info("%s, end\n", __func__);
 }

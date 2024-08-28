@@ -62,10 +62,27 @@ void closeWindow(struct window* win)
     else if (!win->ops) {
 	err("%s, no ops of native window\n", __func__);
 	goto err_no_ops;
+    } else if (!win->ops->closeNativeWindow) {
+	err("%s, no closeNativeWindow ops of native window\n", __func__);
+	goto err_no_ops;
     } else {
 	win->ops->closeNativeWindow(win);
     }
 err_no_ops:
     xfree(win);
     win = NULL;
+}
+
+void updateWindow(struct window* win)
+{
+    if (!win)
+	return;
+    else if (!win->ops) {
+	err("%s, no ops of native window\n", __func__);
+	return;
+    } else if (!win->ops->updateNativeWindow) {
+	err("%s, no updateNativeWindow ops of native window\n", __func__);
+    } else {
+	win->ops->updateNativeWindow(win);
+    }
 }

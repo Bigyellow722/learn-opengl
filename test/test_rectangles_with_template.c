@@ -146,8 +146,7 @@ int main() {
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 	/* swap buffer */
-        glfwSwapBuffers(win->m_window);
-        glfwPollEvents();
+        updateWindow(win);
     }
 
     //glfwTerminate();

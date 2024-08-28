@@ -6,6 +6,7 @@ struct windowCap;
 struct windowClass {
     void* (* createNativeWindow)(struct windowClass *ops, struct windowCap config);
     void (* closeNativeWindow)(struct window *win);
+    void (* updateNativeWindow)(struct window *win);
 };
 
 struct windowCap {
@@ -23,5 +24,6 @@ struct window {
 void setWindowClass(struct windowClass *ops);
 struct window* createWindow(char *name, int width, int height);
 void closeWindow(struct window* win);
+void updateWindow(struct window* win);
 
 #endif
