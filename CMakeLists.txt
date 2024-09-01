@@ -24,7 +24,7 @@ target_include_directories(template PUBLIC
 				    ${CMAKE_CURRENT_SOURCE_DIR}/include
 				    ${CMAKE_CURRENT_SOURCE_DIR}/src/
 				    )
-target_link_libraries(template PUBLIC ${OPENGL_LIBRARIES} glad glfw platform core)
+target_link_libraries(template PUBLIC ${OPENGL_LIBRARIES} glad glfw platform core cglm m)
 
 # Add the tests directory
 enable_testing()
